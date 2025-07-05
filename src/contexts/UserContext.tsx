@@ -46,6 +46,8 @@ export const UserProvider = ({ children } : {children: ReactNode}) => {
             setIsUserLoaded(true);
         }
         catch(error){
+            localStorage.removeItem('token');
+            setToken(null);
             setUser(null);
             setUserType('guest');
             setIsUserLoaded(true);
@@ -54,9 +56,7 @@ export const UserProvider = ({ children } : {children: ReactNode}) => {
 
     useEffect(() => {
         fetchUser();
-    }, [token])
-
-    
+    }, [token]);
 
     const value = {fetchUser, user, userType, isUserLoaded, setToken, setIsUserLoaded, setUserType};
 
