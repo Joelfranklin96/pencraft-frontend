@@ -2,20 +2,47 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthButton } from "../common/AuthButton";
 import { InputField } from "../common/InputField";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios, { isAxiosError } from "axios";
 import { useUserContext } from "../../contexts/UserContext";
 import { API_BASE_URL } from "../../config/api";
+import { Spinner } from "../common/Spinner";
 
 export function Signin(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [isCheckingAuth, setIsCheckingAuth] = useState(true);
     const navigate = useNavigate();
 
     const { setToken, setUserType, setIsUserLoaded } = useUserContext();
 
     useEffect(() => {
-        localStorage.removeItem('token');
-        setToken(null);
+
+        const checkAuthStatus = async () => {
+            const token = localStorage.getItem('token');
+            if(token){
+                try{
+                    const response = await axios.get(`${API_BASE_URL}/api/v1/user/me`,{
+                        'headers': {
+                            'Authorization' : `Bearer ${token}`
+                        }
+                    });
+                    if(response.status == 200){
+                        navigate('/home')
+                        return
+                    }
+                    else{
+                        localStorage.removeItem('token');
+                        setToken(null);
+                    }
+                }
+                catch(error){
+                    localStorage.removeItem('token');
+                    setToken(null);
+                }
+            }
+            setIsCheckingAuth(false);
+        }
+        checkAuthStatus();
     }, [])
 
     async function submitData(){
@@ -33,7 +60,7 @@ export function Signin(){
             navigate('/home');
         }
         catch(error){
-            if(axios.isAxiosError(error) && error.response){
+            if(isAxiosError(error) && error.response){
                 const status = error.response.status;
                 switch (status){
                     case 401: {
@@ -62,6 +89,10 @@ export function Signin(){
         setToken(null);
         setUserType('guest');
         navigate('/home');
+    }
+
+    if(isCheckingAuth){
+        return <Spinner></Spinner>
     }
 
     return (

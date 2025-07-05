@@ -5,18 +5,44 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useUserContext } from "../../contexts/UserContext";
 import { API_BASE_URL } from "../../config/api";
+import { Spinner } from "../common/Spinner";
 
 export function Signup(){
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [isCheckingAuth, setIsCheckingAuth] = useState(true);
     const navigate = useNavigate();
 
     const { setToken, setIsUserLoaded } = useUserContext();
 
     useEffect(() => {
-        localStorage.removeItem('token');
-        setToken(null);
+        const checkAuthStatus = async () => {
+            const token = localStorage.getItem('token');
+            if(token){
+                try{
+                    const response = await axios.get(`${API_BASE_URL}/api/v1/user/me`,{
+                        'headers': {
+                            'Authorization' : `Bearer ${token}`
+                        }
+                    });
+                    if(response.status == 200){
+                        navigate('/home')
+                        return
+                    }
+                    else{
+                        localStorage.removeItem('token');
+                        setToken(null);
+                    }
+                }
+                catch(error){
+                    localStorage.removeItem('token');
+                    setToken(null);
+                }
+            }
+            setIsCheckingAuth(false);
+        }
+        checkAuthStatus();
     }, [])
 
     const submitData = async () => {
@@ -64,6 +90,11 @@ export function Signup(){
         navigate('/home');
     }
 
+    if(isCheckingAuth){
+        return (
+            <Spinner></Spinner>
+        )
+    }
     return (
         <div className="flex justify-center items-center h-screen w-screen">
             <div className="flex justify-center items-center h-full w-1/2">
