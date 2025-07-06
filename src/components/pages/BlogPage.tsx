@@ -10,6 +10,8 @@ import type { Blog } from "../../assets/types";
 import { BlogCard } from "../common/BlogCard";
 import { Spinner } from "../common/Spinner";
 import { API_BASE_URL } from "../../config/api";
+import DOMPurify from 'dompurify';
+
 
 export function BlogPage(){
     const [name, setName] = useState("");
@@ -151,8 +153,8 @@ export function BlogPage(){
                         <div className="-mt-5">
                             <BlogTitleBar authorId={authorId} authorName={authorName} date={date?formatDate(date):""}></BlogTitleBar>
                         </div>
-                        <div className="mt-10 whitespace-pre-line min-h-screen">
-                            <p>{content}</p>
+                        <div className="mt-10 min-h-screen prose prose-lg max-w-none">
+                            <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }} />
                         </div>
                         <div className="flex mt-10 items-center">
                             <div className="">

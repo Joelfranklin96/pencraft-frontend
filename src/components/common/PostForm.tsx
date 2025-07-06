@@ -4,6 +4,7 @@ import { useUserContext } from "../../contexts/UserContext"
 import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { API_BASE_URL } from "../../config/api";
+import JoditEditor from 'jodit-react';
 
 export const PostForm = ({isCreateMode} : {isCreateMode: boolean}) => {
 
@@ -17,6 +18,51 @@ export const PostForm = ({isCreateMode} : {isCreateMode: boolean}) => {
     const token = localStorage.getItem("token");
 
     const navigate = useNavigate();
+    
+    const config = {
+        readonly: false,
+        height: 400,
+        placeholder: 'Write your story...',
+        buttons: [
+            'bold',
+            'italic', 
+            'underline',
+            'strikethrough',
+            '|',
+            'ul',
+            'ol',
+            '|',
+            'outdent',
+            'indent',
+            '|',
+            'fontsize',
+            'paragraph',
+            '|',
+            'link',
+            '|',
+            'left',
+            'center',
+            'right',
+            'justify',
+            '|',
+            'undo',
+            'redo',
+            '|',
+            'eraser',
+            'fullsize'
+        ],
+        removeButtons: ['about', 'image', 'video', 'file', 'table', 'iframe'],
+        showXPathInStatusbar: false,
+        showCharsCounter: true,
+        showWordsCounter: true,
+        toolbarAdaptive: true,
+        uploader: { insertImageAsBase64URI: false },
+        disablePlugins: ['drag-and-drop', 'drag-and-drop-element', 'file'],
+        enter: 'p' as const,
+        statusbar: true,
+        hidePoweredByJodit: true,
+        license: 'MIT'
+    };
     
     const publishPost = async () => {
         if(isCreateMode){
@@ -141,10 +187,17 @@ export const PostForm = ({isCreateMode} : {isCreateMode: boolean}) => {
             <div className="flex justify-center mt-20">
                 <div className="flex flex-col w-70 md:w-150 lg:w-200">
                     <div className="bg-gray-100 rounded-sm w-full">
-                        <input onChange={(e) => {setTitle(e.target.value)}} value={title} placeholder="Title" className="text-2xl w-full pl-2"></input>
+                        <input onChange={(e) => {setTitle(e.target.value)}} value={title} placeholder="Title" className="text-2xl w-full pl-2 py-2"></input>
                     </div>
-                    <div className="bg-gray-100 rounded-sm w-full h-100 mt-3">
-                        <textarea onChange={(e) => {setContent(e.target.value)}} value={content} placeholder="Write your story..." className="text-xl h-full w-full pl-2 pt-2 resize-none"/>
+                    <div className="bg-white rounded-sm w-full mt-3 border border-gray-300">
+                        <div className="prose prose-lg max-w-none">
+                            <JoditEditor
+                                value={content}
+                                config={config}
+                                onBlur={() => {}}
+                                onChange={(newContent) => {setContent(newContent)}}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>

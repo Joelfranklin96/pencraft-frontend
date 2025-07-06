@@ -1,3 +1,5 @@
+import truncate from 'truncate-html';
+
 export const formatDate = (dateString: string) => {
         return new Date(dateString).toLocaleDateString('en-US', {
             year: 'numeric',
@@ -7,11 +9,5 @@ export const formatDate = (dateString: string) => {
     }
 
 export const trimContent = (content: string, n: number) => {
-    const words = content.split(/\s+/);
-    
-    if (words.length <= n) {
-        return content;
-    }
-    
-    return words.slice(0, n).join(' ') + '…';
+    return truncate(content, n, { byWords: true, ellipsis: '…' });
 }

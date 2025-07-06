@@ -1,6 +1,7 @@
-import { Link } from "react-router-dom"
-import type { BlogCardType } from "../../assets/types"
-import { BlogTitleBar } from "./BlogTitleBar"
+import { Link } from "react-router-dom";
+import type { BlogCardType } from "../../assets/types";
+import { BlogTitleBar } from "./BlogTitleBar";
+import DOMPurify from 'dompurify';
 
 export function BlogCard({id, authorId, authorName, date, title, content} : BlogCardType){
     return (
@@ -13,8 +14,8 @@ export function BlogCard({id, authorId, authorName, date, title, content} : Blog
                             <div className="">
                                 <p className="font-bold text-xl group-hover:text-blue-600 transition-colors duration-200">{title}</p>
                             </div>
-                            <div className="group-hover:text-gray-700 transition-colors duration-200">
-                                {content}
+                            <div className="group-hover:text-gray-700 transition-colors duration-200 prose">
+                                <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }} />
                             </div>
                         </Link>
                     </div>
