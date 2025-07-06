@@ -194,8 +194,8 @@ export const PostForm = ({isCreateMode} : {isCreateMode: boolean}) => {
                             <JoditEditor
                                 value={content}
                                 config={config}
-                                onBlur={() => {}}
-                                onChange={(newContent) => {setContent(newContent)}}
+                                onBlur={(newContent) => {setContent(newContent)}}
+                                onChange={() => {}}
                             />
                         </div>
                     </div>
