@@ -97,7 +97,7 @@ export function Signin(){
 
     return (
         <div className="flex justify-center items-center h-screen w-screen">
-            <div className="flex justify-center items-center h-full w-1/2">
+            <div className="flex justify-center items-center h-full w-full lg:w-1/2 px-4">
                 <div>
                     <div className = "flex flex-col justify-center items-center">
                         <div className="flex flex-col items-center">
@@ -116,7 +116,7 @@ export function Signin(){
                         </div>
                         <div className="mt-3">
                             <InputField onChange = {function(e){
-                                setPassword(e.target.value)}} name="password" text='Password' placeholder='' isPassword={true} />
+                                setPassword(e.target.value)}} name="password" text='Password' placeholder='Enter your password' isPassword={true} />
                         </div>
                         <div className="mt-3 hover:bg-gray-50">
                             <AuthButton text="Signin" onClick={submitData}></AuthButton>
