@@ -133,18 +133,18 @@ export function BlogPage(){
             {!loading ?
             <div>
                 <div className="flex justify-center">
-                    <div className="flex flex-col w-200">
+                    <div className="flex flex-col w-80 lg:w-200">
                         <div className='mt-5 flex items-center'>
                             <p className="font-bold text-3xl">{title}</p>
                             {isAuthor?
-                            <div className="flex items-center">
+                            <div className="block lg:flex items-center">
                                 <div onClick={() => {navigate(`/blog/${id}/edit`)}} 
                                     className="w-14 bg-yellow-300 rounded-full ml-10 flex items-center justify-center cursor-pointer hover:bg-gray-300 active:bg-gray-400">
                                     <span className="font-bold">Edit</span>
                                 </div>
                                 <div 
                                     onClick={deleteBlog} 
-                                    className="w-17 bg-red-500 rounded-full ml-3 flex items-center justify-center cursor-pointer hover:bg-gray-300 active:bg-gray-400">
+                                    className="w-17 bg-red-500 rounded-full ml-10 mt-2 lg:ml-3 lg:mt-0 flex items-center justify-center cursor-pointer hover:bg-gray-300 active:bg-gray-400">
                                     <span className="font-bold">Delete</span>
                                 </div>
                             </div> : null
@@ -168,7 +168,7 @@ export function BlogPage(){
                 </div>
                 <div className="flex justify-center bg-gray-50 w-screen mt-10">
                     {blogs.length != 0 ?
-                    <div className="w-200">
+                    <div className="w-80 lg:w-200">
                         <div className="mt-10">
                             <p className="font-bold text-xl">More from {authorName}</p>
                         </div>

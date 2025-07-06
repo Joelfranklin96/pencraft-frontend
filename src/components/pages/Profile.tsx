@@ -50,7 +50,7 @@ export const Profile = () => {
             <Topbar profileName={name} profileId={profileId} userType={userType} isUserLoaded={isUserLoaded}></Topbar>
             {!loading ?
             <div className="flex justify-center">
-                <div className="w-200 mt-20">
+                <div className="w-80 lg:w-200 mt-20">
                     <p className="font-bold text-2xl">{authorName}</p>
                     <div className="grid">
                     {blogs.map((blog : Blog) => (

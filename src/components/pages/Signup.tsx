@@ -97,7 +97,7 @@ export function Signup(){
     }
     return (
         <div className="flex justify-center items-center h-screen w-screen">
-            <div className="flex justify-center items-center h-full w-1/2">
+            <div className="flex justify-center items-center h-full w-full lg:w-1/2">
                 <div>
                     <div className = "flex flex-col justify-center items-center">
                         <div className="flex flex-col items-center">

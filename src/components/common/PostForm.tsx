@@ -167,7 +167,7 @@ export const PostForm = ({isCreateMode} : {isCreateMode: boolean}) => {
     return (
         <div>
             <div className="flex justify-center mt-5">
-                <div className="flex w-200 items-center">
+                <div className="flex w-50 lg:w-200 items-center">
                     <Link to='/home'>
                         <div className="mr-4 flex items-center">
                             <p className="font-bold text-3xl">PenCraft</p>
