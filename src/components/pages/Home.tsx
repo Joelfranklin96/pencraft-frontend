@@ -88,7 +88,7 @@ export function Home(){
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ml-15">
                 {blogs.map((blog : Blog)=>(
                     <div key={blog.id} className="flex">
-                        <BlogCard id={blog.id} authorId={blog.authorId} authorName={blog.author.name} date={formatDate(blog.date)} title={blog.title} content={trimContent(blog.content, 100)}></BlogCard>
+                        <BlogCard id={blog.id} authorId={blog.authorId} authorName={blog.author.name} date={formatDate(blog.date)} title={blog.title} content={trimContent(blog.content, 80)}></BlogCard>
                         <div className="ml-10 mt-10 mr-15">
                             <hr className="w-1 h-9/10 bg-gray-100 border-0 rounded-sm"></hr>
                         </div>
