@@ -122,7 +122,7 @@ export function Signup(){
                         <div className="mt-3">
                             <InputField onChange={function(e){
                                 setPassword(e.target.value);
-                            }} name="password" text='Password' placeholder='' isPassword={true} />
+                            }} name="password" text='Password' placeholder='Enter your password' isPassword={true} />
                         </div>
                         <div className="mt-3">
                             <AuthButton text="Signup" onClick={submitData}></AuthButton>
