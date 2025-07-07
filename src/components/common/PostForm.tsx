@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { Avatar } from "../common/Avatar"
 import { useUserContext } from "../../contexts/UserContext"
 import axios from "axios";
@@ -19,50 +19,29 @@ export const PostForm = ({isCreateMode} : {isCreateMode: boolean}) => {
 
     const navigate = useNavigate();
     
-    const config = {
-        readonly: false,
-        height: 400,
-        placeholder: 'Write your story...',
-        buttons: [
-            'bold',
-            'italic', 
-            'underline',
-            'strikethrough',
-            '|',
-            'ul',
-            'ol',
-            '|',
-            'outdent',
-            'indent',
-            '|',
-            'fontsize',
-            'paragraph',
-            '|',
-            'link',
-            '|',
-            'left',
-            'center',
-            'right',
-            'justify',
-            '|',
-            'undo',
-            'redo',
-            '|',
-            'eraser',
-            'fullsize'
-        ],
-        removeButtons: ['about', 'image', 'video', 'file', 'table', 'iframe'],
-        showXPathInStatusbar: false,
-        showCharsCounter: true,
-        showWordsCounter: true,
-        toolbarAdaptive: true,
-        uploader: { insertImageAsBase64URI: false },
-        disablePlugins: ['drag-and-drop', 'drag-and-drop-element', 'file'],
-        enter: 'p' as const,
-        statusbar: true,
-        hidePoweredByJodit: true,
-        license: 'MIT'
-    };
+    const editorConfig = useMemo(() => ({
+      readonly: false,
+      height: 400,
+      placeholder: 'Write your story…',
+      buttons: [
+        'bold', 'italic', 'underline', 'strikethrough', '|',
+        'ul', 'ol', '|', 'outdent', 'indent', '|',
+        'fontsize', 'paragraph', '|', 'link', '|',
+        'left', 'center', 'right', 'justify', '|',
+        'undo', 'redo', '|', 'eraser', 'fullsize'
+      ],
+      removeButtons: ['about', 'image', 'video', 'file', 'table', 'iframe'],
+      showXPathInStatusbar: false,
+      showCharsCounter: true,
+      showWordsCounter: true,
+      toolbarAdaptive: true,
+      uploader: { insertImageAsBase64URI: false },
+      disablePlugins: ['drag-and-drop', 'drag-and-drop-element', 'file'],
+      enter: 'p' as const,
+      statusbar: true,
+      hidePoweredByJodit: true,
+      license: 'MIT'
+    }), []);
     
     const publishPost = async () => {
         if(isCreateMode){
@@ -193,7 +172,7 @@ export const PostForm = ({isCreateMode} : {isCreateMode: boolean}) => {
                         <div className="prose prose-lg max-w-none">
                             <JoditEditor
                                 value={content}
-                                config={config}
+                                config={editorConfig}
                                 onBlur={(newContent) => {setContent(newContent)}}
                                 onChange={() => {}}
                             />
