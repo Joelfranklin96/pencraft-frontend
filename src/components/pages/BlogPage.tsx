@@ -106,8 +106,6 @@ export function BlogPage(){
                     'Authorization': `Bearer ${token}`
                 }
             });
-
-            console.log(bulkResponse);
             
             const ownBlogs = bulkResponse.data.blogs.filter((blog: Blog)=>(blog.authorId == currentBlog.author.id && blog.id != currentBlog.id))
             setBlogs(ownBlogs);
@@ -140,12 +138,12 @@ export function BlogPage(){
                             <div className="block lg:flex items-center">
                                 <div onClick={() => {navigate(`/blog/${id}/edit`)}} 
                                     className="w-14 bg-yellow-300 rounded-full ml-10 flex items-center justify-center cursor-pointer hover:bg-gray-300 active:bg-gray-400">
-                                    <span className="font-bold">Edit</span>
+                                    <p className="font-bold">Edit</p>
                                 </div>
                                 <div 
                                     onClick={deleteBlog} 
                                     className="w-17 bg-red-500 rounded-full ml-10 mt-2 lg:ml-3 lg:mt-0 flex items-center justify-center cursor-pointer hover:bg-gray-300 active:bg-gray-400">
-                                    <span className="font-bold">Delete</span>
+                                    <p className="font-bold">Delete</p>
                                 </div>
                             </div> : null
                             }
@@ -153,7 +151,7 @@ export function BlogPage(){
                         <div className="-mt-5">
                             <BlogTitleBar authorId={authorId} authorName={authorName} date={date?formatDate(date):""}></BlogTitleBar>
                         </div>
-                        <div className="mt-10 min-h-screen prose prose-lg max-w-none">
+                        <div className="mt-5 min-h-screen prose prose-lg max-w-none">
                             <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }} />
                         </div>
                         <div className="flex mt-10 items-center">
@@ -168,11 +166,11 @@ export function BlogPage(){
                 </div>
                 <div className="flex justify-center bg-gray-50 w-screen mt-10">
                     {blogs.length != 0 ?
-                    <div className="w-80 lg:w-200">
+                    <div className="w-80 flex flex-col items-center lg:w-200">
                         <div className="mt-10">
                             <p className="font-bold text-xl">More from {authorName}</p>
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2">
+                        <div className="grid grid-cols-1 md:grid-cols-2 justify-items-center md:justify-items-start">
                             {blogs.map((blog:Blog)=>(
                                 <div key={blog.id} className="mr-10">
                                     <BlogCard key={blog.id} authorId={authorId} id= {blog.id} authorName={blog.author.name} date={formatDate(blog.date)} title={blog.title} content={trimContent(blog.content, 50)}></BlogCard>
